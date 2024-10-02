@@ -91,6 +91,6 @@ const deleteDish = async(req, res) => {
     catch (error) {
         return resHandler({ res, statusCode: 400, data: {error: error.message} })
     }
-}
+};
 
 module.exports = { addDish, getDishes, updateDish, deleteDish };
