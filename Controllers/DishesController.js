@@ -38,7 +38,7 @@ const addDish = async (req, res) => {
     }
 };
 
-//GETTING DISHES
+//GETTING DISHES...//
 const getDishes = async (req, res) => {
 
     try {
