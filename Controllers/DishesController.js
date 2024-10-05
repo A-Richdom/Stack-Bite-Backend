@@ -14,7 +14,7 @@ const addDish = async (req, res) => {
 
     const dishName = req.body.name
     const dishPrice = `$${req.body.price}`;
-    const dishQuantity = req.body.quantity
+    const dishQuantity = `${req.body.quantity} bowl${req.body.quantity > 1 ? 's' : ''}`;
 
     try {
         //check if the file or text uploaded
@@ -63,7 +63,7 @@ const updateDish = async (req, res) => {
     const dishImage = req.file
     const dishName = req.body.name
     const dishPrice = `$${req.body.price}`;
-    const dishQuantity = req.body.quantity
+    const dishQuantity = `${req.body.quantity} bowl${req.body.quantity > 1 ? 's' : ''}`
 
     try {
         const response = await File.findByIdAndUpdate(id, { imgName: dishImage, name: dishName, price: dishPrice, quantity: dishQuantity }, {
