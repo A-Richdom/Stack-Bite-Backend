@@ -21,14 +21,14 @@ const addDish = async (req, res) => {
         if (!req.file || !req.body.name || !req.body.price || !req.body.quantity) {
             return res.status(400).json({ error: "Image/Text box is empty" });
         }
-        const response = await File.create({
+        const newDish = await File.create({
             imgName: dishImage,
             name: dishName,
             price: dishPrice,
             quantity: dishQuantity
         })
 
-        return resHandler({ res, statusCode: 200, data: response })
+        return resHandler({ res, statusCode: 200, data: newDish })
 
         //send a response back to the client
         // return res.status(200).json({ message: 'File uploaded successfully', avatar, username });
@@ -60,13 +60,22 @@ const getDishes = async (req, res) => {
 //UPDATE DISEHES...//
 const updateDish = async (req, res) => {
     const { id } = req.params
-    const dishImage = req.file
+    const dishImage = req.file ? req.file.filename : undefined;
     const dishName = req.body.name
     const dishPrice = `$${req.body.price}`;
     const dishQuantity = `${req.body.quantity} bowl${req.body.quantity > 1 ? 's' : ''}`
 
     try {
-        const response = await File.findByIdAndUpdate(id, { imgName: dishImage, name: dishName, price: dishPrice, quantity: dishQuantity }, {
+        const response = await File.findByIdAndUpdate(id, 
+
+            // {
+            //     ...(dishImage && { imgName: dishImage }),  // Only update image if a new one is provided
+            //     name: dishName,
+            //     price: dishPrice,
+            //     quantity: dishQuantity
+            // },
+            
+            { imgName: dishImage, name: dishName, price: dishPrice, quantity: dishQuantity }, {
             new: true
         })
         return resHandler({
